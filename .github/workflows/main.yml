@@ -1,0 +1,27 @@
+# This workflow will deploy into Divio Test environment on a push event to the develop branch
+
+name: Divio Test environment Deployment
+
+# Assigning environment variables of the secret keys for easy access
+env:
+  API_TOKEN: ${{ secrets.API_TOKEN }}
+  TEST_ENVIRONMENT_ID: ${{ secrets.TEST_ENVIRONMENT_ID }}  
+
+on:
+ push:
+  branches: [ develop ]
+
+# jobs run to execute the workflow
+jobs:
+
+# This workflow contains a single job called "deploy" and runs on ubuntu-latest
+ deploy:
+  runs-on: ubuntu-latest
+  # Steps represent a sequence of tasks that will be executed as part of the job
+  steps:
+  # Checks-out the repository under $GITHUB_WORKSPACE, so this job can access it
+  - uses: actions/checkout@v2
+      
+  - name: Deploy
+    run: |
+     curl -X POST --data "environment=$TEST_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/
