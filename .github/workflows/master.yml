@@ -1,0 +1,18 @@
+# This workflow will deploy into Divio Live environment on a push event to the develop branch
+
+name: master branch, Live Deployment
+env:
+  API_TOKEN: ${{ secrets.API_TOKEN }}
+  LIVE_ENVIRONMENT_ID: ${{ secrets.LIVE_ENVIRONMENT_ID }}
+on:
+ push:
+  branches: [ master ]
+
+jobs:
+ deploy:
+  runs-on: ubuntu-latest
+  steps:
+  - uses: actions/checkout@v2
+  - name: Deploy
+    run: |
+     curl -X POST --data "environment=$LIVE_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/
