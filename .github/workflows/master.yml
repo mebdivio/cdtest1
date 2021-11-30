@@ -4,7 +4,7 @@ name: master branch, Live Deployment
 env:
   API_TOKEN: ${{ secrets.API_TOKEN }}
   LIVE_ENVIRONMENT_ID: ${{ secrets.LIVE_ENVIRONMENT_ID }}
-  LIVE_DEPLOYMENT_ID: ${{ secrets.LIVE_DEPLOYMENT_ID }}  
+  # LIVE_DEPLOYMENT_ID: ${{ secrets.LIVE_DEPLOYMENT_ID }}  
 on:
  push:
   branches: [ master ]
@@ -14,12 +14,12 @@ jobs:
   runs-on: ubuntu-latest
   steps:
   - uses: actions/checkout@v2
-  - name: Deploy
-    run: |
-     curl -X POST --data "environment=$LIVE_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/
+  # - name: Deploy
+  #   run: |
+  #    curl -X POST --data "environment=$LIVE_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/
 # - uses: actions/checkout@v1
   - name: Deployment status check
     run: | 
       chmod +x "${GITHUB_WORKSPACE}/cd-testlive.sh"
       ./cd-testlive.sh
-      # curl https://api.divio.com/apps/v3/deployments/$LIVE_DEPLOYMENT_ID/ -H "Authorization: Token $API_TOKEN"
+    # curl https://api.divio.com/apps/v3/deployments/$LIVE_DEPLOYMENT_ID/ -H "Authorization: Token $API_TOKEN"

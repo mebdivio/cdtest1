@@ -6,7 +6,7 @@ name: Divio Test environment Deployment
 env:
   API_TOKEN: ${{ secrets.API_TOKEN }}
   TEST_ENVIRONMENT_ID: ${{ secrets.TEST_ENVIRONMENT_ID }} 
-  TEST_DEPLOYMENT_ID: ${{ secrets.TEST_DEPLOYMENT_ID }}  
+  # TEST_DEPLOYMENT_ID: ${{ secrets.TEST_DEPLOYMENT_ID }}  
 
 on:
  push:
@@ -23,16 +23,16 @@ jobs:
   # Checks-out the repository under $GITHUB_WORKSPACE, so this job can access it
   - uses: actions/checkout@v2
       
-  - name: Deploy
-    run: |
-     curl -X POST --data "environment=$TEST_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/
+  # - name: Deploy
+  #   run: |
+  #    curl -X POST --data "environment=$TEST_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/
 
 # - uses: actions/checkout@v1
   - name: Deployment status check
     run: | 
       chmod +x "${GITHUB_WORKSPACE}/cd-test.sh"
       ./cd-test.sh
-      # curl https://api.divio.com/apps/v3/deployments/$TEST_DEPLOYMENT_ID/ -H "Authorization: Token $API_TOKEN"
+    # curl https://api.divio.com/apps/v3/deployments/$TEST_DEPLOYMENT_ID/ -H "Authorization: Token $API_TOKEN"
   
     # uses: mebdivio/github-actions-sbt@master
     # working-directory: ./cdtest
