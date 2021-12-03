@@ -1,15 +1,10 @@
 #! /bin/bash
 
-export COUNT=0
-echo "Bash starting, count is ${COUNT}"
-export TEST_DEPLOYMENT_ID="$(curl -X POST --data "environment=$TEST_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/ | jq '.uuid')"
+export TEST_DEPLOYMENT_ID="$(curl -X POST --data "environment=$TEST_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/ | jq '.uuid'| tr -d '"')
 echo "The deployment id is: ${TEST_DEPLOYMENT_ID}"
 
 while true; do 
   sleep 1
-  COUNT+=1
-  echo "$COUNT"
-  export TEST_DEPLOYMENT_ID="$(curl -X POST --data "environment=$TEST_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/ | jq '.uuid')"
   echo "The deployment id is: $TEST_DEPLOYMENT_ID"
 
   echo "Getting deployment credentials and saving it in a deploy.json"

@@ -3,7 +3,8 @@
 name: master branch, Live Deployment
 env:
   API_TOKEN: ${{ secrets.API_TOKEN }}
-  LIVE_ENVIRONMENT_ID: ${{ secrets.LIVE_ENVIRONMENT_ID }}
+  PROJECT_SLUG: ${{ secrets.PROJECT_SLUG }}
+  # LIVE_ENVIRONMENT_ID: ${{ secrets.LIVE_ENVIRONMENT_ID }}
   # LIVE_DEPLOYMENT_ID: ${{ secrets.LIVE_DEPLOYMENT_ID }}  
 on:
  push:
