@@ -1,38 +1,22 @@
 #! /bin/bash
-
-export TEST_DEPLOYMENT_ID=$(curl -X POST --data "environment=$TEST_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/ | jq '.uuid')
-echo "The deployment is: ${TEST_DEPLOYMENT_ID}"
-# echo "${DEPLOYMENT}" | jq '.' > deploy.json
-# export TEST_ENVIRONMENT_ID="$(jq '.uuid' deploy.json)"
-
-
-# export TEST_DEPLOYMENT_ID=$(curl -X POST --data "environment=$TEST_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/ | jq '.uuid')
-# echo "The deployment id is: ${TEST_DEPLOYMENT_ID}"
+APPLICATION_ID=$(curl https://api.divio.com/apps/v3/applications/\?slug\=$PROJECT_SLUG -H "Authorization: Token $API_TOKEN" | jq '.results[0].uuid'| tr -d '"')
+TEST_ENVIRONMENT_ID=$(curl https://api.divio.com/apps/v3/environments/\?application\=$APPLICATION_ID -H "Authorization: Token $API_TOKEN" | jq '.results[0].uuid'| tr -d '"')
+TEST_DEPLOYMENT_ID=$(curl -X POST --data "environment=$TEST_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/ | jq '.uuid'| tr -d '"')
 
 while true; do 
   sleep 1
-  echo "The deployment id is: ${TEST_DEPLOYMENT_ID}"
-  export DEPLOY=$(curl https://api.divio.com/apps/v3/deployments/$TEST_DEPLOYMENT_ID/ -H "Authorization: Token $API_TOKEN")
-  echo "${DEPLOY}"
-  export STATUS=$(curl https://api.divio.com/apps/v3/deployments/$TEST_DEPLOYMENT_ID/ -H "Authorization: Token $API_TOKEN"| jq '.status')
-  echo "Status is ${STATUS}."
-  export SUCCESS=$(curl https://api.divio.com/apps/v3/deployments/$TEST_DEPLOYMENT_ID/ -H "Authorization: Token $API_TOKEN"| jq '.success')
-  # # echo "${DEPLOY}"
-  # # echo "${DEPLOY}" | jq '.' > deploy.json
-  # # status="$(jq '.status' deploy.json)"
-  # echo "${status} in progress"
-  # success="$(jq '.success' deploy.json)"
-  echo "Success is ${SUCCESS}."
-  if [ $SUCCESS == 'true' ]; then 
+  echo "$(curl https://api.divio.com/apps/v3/deployments/$TEST_DEPLOYMENT_ID/ -H "Authorization: Token $API_TOKEN")" | jq '.' > deploy.json
+  STATUS="$(jq '.status' deploy.json)"
+  echo "Deployment ${STATUS}"
+  SUCCESS="$(jq '.success' deploy.json)"
+  if [ $SUCCESS == true ]; then 
     echo "Deployment has completed successfully"
-    exit 0
     break
-  elif [ $SUCCESS == 'false' ]; then  
+  elif [ $SUCCESS == false ]; then  
     echo "Deplyment has failed"
-    exit 1
     break
   else
-    echo "Deplyment has not yet finished"
+    continue
   fi
 done
  
