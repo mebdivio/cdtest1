@@ -5,8 +5,7 @@ name: Divio Test environment Deployment
 # Assigning environment variables of the secret keys for easy access
 env:
   API_TOKEN: ${{ secrets.API_TOKEN }}
-  TEST_ENVIRONMENT_ID: ${{ secrets.TEST_ENVIRONMENT_ID }} 
-  TEST_DEPLOYMENT_ID: ${{ secrets.TEST_DEPLOYMENT_ID }}  
+  PROJECT_SLUG: ${{ secrets.PROJECT_SLUG }}
 
 on:
  push:
@@ -22,17 +21,9 @@ jobs:
   steps:
   # Checks-out the repository under $GITHUB_WORKSPACE, so this job can access it
   - uses: actions/checkout@v2
-      
-  - name: Deploy
-    run: |
-     curl -X POST --data "environment=$TEST_ENVIRONMENT_ID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/
-
-# - uses: actions/checkout@v1
-  - name: Deployment status check
+  # Use a script to get the necessary credentials, deploy and broadcast the success of the deployment
+  - name: Deploy and report the success of the deployment
     run: | 
       chmod +x "${GITHUB_WORKSPACE}/cd-test.sh"
       ./cd-test.sh
-      # curl https://api.divio.com/apps/v3/deployments/$TEST_DEPLOYMENT_ID/ -H "Authorization: Token $API_TOKEN"
-  
-    # uses: mebdivio/github-actions-sbt@master
-    # working-directory: ./cdtest
+   
