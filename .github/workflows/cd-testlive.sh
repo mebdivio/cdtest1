@@ -4,7 +4,7 @@
 APPLICATION_UUID=$(curl https://api.divio.com/apps/v3/applications/\?slug\=$PROJECT_SLUG -H "Authorization: Token $API_TOKEN" | jq '.results[0].uuid'| tr -d '"')
 
 # From the APPLICATION UUID, getting the ENVIRONMENT UUID
-LIVE_ENVIRONMENT_UUID=$(curl https://api.divio.com/apps/v3/environments/\?application\=$APPLICATION_UUID -H "Authorization: Token $API_TOKEN" | jq '.results[0].uuid'| tr -d '"')
+LIVE_ENVIRONMENT_UUID=$(curl https://api.divio.com/apps/v3/environments/\?application\=$APPLICATION_UUID -H "Authorization: Token $API_TOKEN" | jq '.results[1].uuid'| tr -d '"')
 
 # From the ENVIRONMENT UUID, getting the DEPLOYMENT UUID
 LIVE_DEPLOYMENT_UUID=$(curl -X POST --data "environment=$LIVE_ENVIRONMENT_UUID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/ | jq '.uuid'| tr -d '"')
