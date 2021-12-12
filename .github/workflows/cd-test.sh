@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# From the Project SLUG, Jason Querying the API to get the APPLICATION UUID, removing the quotation mark
+# From the Project SLUG, json Querying the API to get the APPLICATION UUID, removing the quotation mark
 APPLICATION_UUID=$(curl https://api.divio.com/apps/v3/applications/\?slug\=$PROJECT_SLUG -H "Authorization: Token $API_TOKEN" | jq '.results[0].uuid'| tr -d '"')
 
 # From the APPLICATION UUID, getting the ENVIRONMENT UUID
@@ -13,14 +13,14 @@ TEST_DEPLOYMENT_UUID=$(curl -X POST --data "environment=$TEST_ENVIRONMENT_UUID" 
 while true; do
   sleep 1
 
-# From the DEPLOYMENT UUID, querying and echoing the DEPLOYMENT credentials to a Jason file
+# From the DEPLOYMENT UUID, querying and echoing the DEPLOYMENT credentials to a json file
   echo "$(curl https://api.divio.com/apps/v3/deployments/$TEST_DEPLOYMENT_UUID/ -H "Authorization: Token $API_TOKEN")" | jq '.' > deploy.json
 
-# Querying the current status of the deployment from the Jason file and broadcasting it
+# Querying the current status of the deployment from the json file and broadcasting it
   STATUS="$(jq '.status' deploy.json)"
   echo "Deployment ${STATUS}"
 
-# Querying the current success status of the deployment from the Jason file
+# Querying the current success status of the deployment from the json file
   SUCCESS="$(jq '.success' deploy.json)"
 
 # Checking the current success status of the deployment 
