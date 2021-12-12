@@ -1,4 +1,4 @@
-# This workflow will deploy into Divio Live environment on a push event to the develop branch
+# This workflow will deploy into Divio Live environment on a push event to the master branch
 
 name: master branch, Live Deployment
 env:
