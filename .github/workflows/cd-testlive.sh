@@ -1,12 +1,13 @@
 #! /bin/bash
 
-# From the Project SLUG, json Querying the API to get the APPLICATION UUID, removing the quotation mark
+# From the Project SLUG, json querying the API to get the APPLICATION UUID without the quotation mark
 APPLICATION_UUID=$(curl https://api.divio.com/apps/v3/applications/\?slug\=$PROJECT_SLUG -H "Authorization: Token $API_TOKEN" | jq '.results[0].uuid'| tr -d '"')
 
-# From the APPLICATION UUID, getting the ENVIRONMENT UUID
+# From the APPLICATION UUID, getting the LIVE ENVIRONMENT UUID, 
+# the second index of the results key, without the quotation mark
 LIVE_ENVIRONMENT_UUID=$(curl https://api.divio.com/apps/v3/environments/\?application\=$APPLICATION_UUID -H "Authorization: Token $API_TOKEN" | jq '.results[1].uuid'| tr -d '"')
 
-# From the ENVIRONMENT UUID, getting the DEPLOYMENT UUID
+# From the ENVIRONMENT UUID, getting the DEPLOYMENT UUID without the quotation mark
 LIVE_DEPLOYMENT_UUID=$(curl -X POST --data "environment=$LIVE_ENVIRONMENT_UUID" --header "Authorization: Token $API_TOKEN" https://api.divio.com/apps/v3/deployments/ | jq '.uuid'| tr -d '"')
 
 # Loop until deployment is completed
