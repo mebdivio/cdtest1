@@ -3,3 +3,7 @@ https://divio-addons.s3-eu-central-1.amazonaws.com/aldryn-addons/2.0.1/75074b5c-
 https://divio-addons.s3-eu-central-1.amazonaws.com/aldryn-django/2.2.27.0/420e8ff9-6f3b-4f54-9067-3f61cb7d3b0f/aldryn-django-2.2.27.0.tar.gz#egg=aldryn-django==2.2.27.0
 https://divio-addons.s3-eu-central-1.amazonaws.com/aldryn-sso/2.0.1/fc74bf76-5ef7-485e-b645-75b747d78ebf/aldryn-sso-2.0.1.tar.gz#egg=aldryn-sso==2.0.1
 # </INSTALLED_ADDONS>
+
+importlib-metadata<4.9.0
+svglib<1.2.0
+Pillow<9.0.0
