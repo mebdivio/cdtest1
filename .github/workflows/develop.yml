@@ -25,5 +25,5 @@ jobs:
   - name: Deploy and report the success of the deployment
     run: | 
       chmod +x "${GITHUB_WORKSPACE}/cd-test.sh"
-      ./cd-test.sh
+      . ./cd-test.sh
    
