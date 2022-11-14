@@ -45,6 +45,6 @@ jobs:
     - name: Deploy and report the deployment status
       run: | 
         # Use a Python script to deploy and broadcast the deployment status
-        chmod +x "${GITHUB_WORKSPACE}/create-env.py"
-        . ./create-env.py
+        chmod +x "${GITHUB_WORKSPACE}/create-env-deploy.py"
+        . ./create-env-deploy.py
 
