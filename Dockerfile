@@ -4,7 +4,7 @@
 # this functionality by simply removing the wrapping tags.
 # </WARNING>
 
-FROM divio/base:2.5-py3.9-slim-buster
+FROM divio/base:1.1-py3.11-slim-bullseye
 
 # <NPM>
 # </NPM>
