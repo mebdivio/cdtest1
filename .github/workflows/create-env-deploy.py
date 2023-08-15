@@ -35,7 +35,7 @@ api_token = os.getenv("API_TOKEN")
 
 
 # Authentication headers
-headers = {"Authorization": f"{api_token}"}
+headers = {"Authorization": f"Token {api_token}"}
 
 
 # Getting the application uuid
